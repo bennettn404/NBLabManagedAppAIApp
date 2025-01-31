@@ -1,0 +1,152 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "handler": "Microsoft.Azure.CreateUIDef",
+  "version": "0.1.2-preview",
+  "parameters": {
+    "config": {
+      "isWizard": true,
+      "basics": {
+        "location": {
+          "allowedValues": [
+            "eastus",
+            "westus2",
+            "centralus",
+            "westeurope",
+            "northeurope",
+            "uksouth",
+            "francecentral",
+            "japaneast",
+            "southeastasia",
+            "australiaeast"
+          ],
+          "visible": true
+        }
+      }
+    },
+    "basics": [],
+    "steps": [
+      {
+        "name": "functionAppConfig",
+        "label": "Function App Configuration",
+        "elements": [
+          {
+            "name": "functionAppConfigSection1",
+            "type": "Microsoft.Common.Section",
+            "label": "Function App Runtime Details",
+            "elements": [
+              {
+
+                "name": "runtime",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Runtime",
+                "placeholder": "",
+                "defaultValue": [ "dotnet-isolated" ],
+                "toolTip": "The runtime the function will use",
+                "defaultDescription": "A value for selection",
+                "constraints": {
+                  "allowedValues": [
+                    {
+                      "label": ".NET",
+                      "description": "dotnet",
+                      "value": "dotnet-isolated"
+                    },
+                    {
+                      "label": "Java",
+                      "description": "java",
+                      "value": "java"
+                    }
+                  ],
+                  "required": true
+                },
+                "visible": true
+              },
+              {
+                "name": "runtimeNET",
+                "type": "Microsoft.Common.DropDown",
+                "label": ".NET Runtime",
+                "placeholder": "",
+                "toolTip": "The .NET runtime the function will use",
+                "defaultDescription": "A value for selection",
+                "constraints": {
+                  "allowedValues": [
+                    {
+                      "label": "8.0",
+                      "description": ".NET 8.0",
+                      "value": "8.0"
+                    },
+                    {
+                      "label": "9.0",
+                      "description": ".NET 9.0",
+                      "value": "9.0"
+                    }
+                  ],
+                  "required": true
+                },
+                "visible": "[equals(steps('functionAppConfig').functionAppConfigSection1.runtime,'dotnet-isolated')]"
+              },
+              {
+                "name": "runtimeJava",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Java Runtime",
+                "placeholder": "",
+                "toolTip": "The Java runtime the function will use",
+                "defaultDescription": "A value for selection",
+                "constraints": {
+                  "allowedValues": [
+                    {
+                      "label": "8",
+                      "description": "Java 8",
+                      "value": "8"
+                    },
+                    {
+                      "label": "11",
+                      "description": "Java 11",
+                      "value": "11"
+                    },
+                    {
+                      "label": "17",
+                      "description": "Java 17",
+                      "value": "17"
+                    },
+                    {
+                      "label": "21",
+                      "description": "Java 21",
+                      "value": "21"
+                    }
+                  ],
+                  "required": true
+                },
+                "visible": "[equals(steps('functionAppConfig').functionAppConfigSection1.runtime,'java')]"
+              },
+              {
+                "name": "zipDeployUrl",
+                "type": "Microsoft.Common.TextBox",
+                "label": "URL to deployment",
+                "defaultValue": "",
+                "toolTip": "Please enter a url to a zipped function app deployment",
+                "placeholder": "",
+                "constraints": {
+                  "required": true,
+                  "validationMessage": "URL is required"
+                },
+                "visible": true
+              }
+            ],
+            "visible": true
+          }
+        ]
+      },
+      {
+        "name": "step2",
+        "label": "Step 2",
+        "elements": [
+        ]
+      }
+    ],
+    "outputs": {
+      "functionAppRuntime": "[steps('functionAppConfig').functionAppConfigSection1.runtime]",
+      "functionAppRuntimeVersion": "[coalesce(steps('functionAppConfig').functionAppConfigSection1.runtimeJava,coalesce(steps('functionAppConfig').functionAppConfigSection1.runtimeNET)]",
+      "applicationZipUrl": "[steps('functionAppConfig').functionAppConfigSection1.zipDeployUrl]"
+    }
+  }
+}
