@@ -35,7 +35,7 @@
     }
   },
   "variables": {
-    "resourceToken": "[toLower(uniqueString(subscription().id, resourceGroup().name, parameters('location')))]",
+    "resourceToken": "[toLower(uniqueString(subscription().id, resourceGroup().name, resourceGroup().location))]",
     "deploymentStorageContainerName": "[concat('app-package-', take(parameters('functionAppName'), 32),'-', take(variables('resourceToken'), 7))]",
     "storageRoleDefinitionId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b" //Storage Blob Data Owner role
 
