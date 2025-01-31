@@ -253,8 +253,7 @@
         "name": "S1"
       },
       "properties": {
-        "publicNetworkAccess": "Enabled",
-        "disableLocalAuth": true
+        "publicNetworkAccess": "Enabled"
       }
     }
   ]
