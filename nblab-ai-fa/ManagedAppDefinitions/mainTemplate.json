@@ -278,7 +278,7 @@
         "name": "S1"
       },
       "properties": {
-        "publicNetworkAccess": "All",
+        "publicNetworkAccess": "Enabled",
         "disableLocalAuth": true
       }
     }
