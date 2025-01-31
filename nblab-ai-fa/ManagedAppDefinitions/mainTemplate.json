@@ -146,25 +146,6 @@
       },
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
-        "functionAppConfig": {
-          "deployment": {
-            "storage": {
-              "type": "blobContainer",
-              "value": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))).primaryEndpoints.blob, variables('deploymentStorageContainerName'))]",
-              "authentication": {
-                "type": "SystemAssignedIdentity"
-              }
-            }
-          },
-          "scaleAndConcurrency": {
-            "maximumInstanceCount": "100",
-            "instanceMemoryMB": "2048"
-          },
-          "runtime": {
-            "name": "[parameters('functionAppRuntime')]",
-            "version": "[parameters('functionAppRuntimeVersion')]"
-          }
-        },
         "siteConfig": {
           "appSettings": [
             {
@@ -203,25 +184,6 @@
       },
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
-        "functionAppConfig": {
-          "deployment": {
-            "storage": {
-              "type": "blobContainer",
-              "value": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))).primaryEndpoints.blob, variables('deploymentStorageContainerName'))]",
-              "authentication": {
-                "type": "SystemAssignedIdentity"
-              }
-            }
-          },
-          "scaleAndConcurrency": {
-            "maximumInstanceCount": "100",
-            "instanceMemoryMB": "2048"
-          },
-          "runtime": {
-            "name": "[parameters('functionAppRuntime')]",
-            "version": "[parameters('functionAppRuntimeVersion')]"
-          }
-        },
         "siteConfig": {
           "appSettings": [
             {
