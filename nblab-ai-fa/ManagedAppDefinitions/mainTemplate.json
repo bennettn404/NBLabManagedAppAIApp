@@ -90,28 +90,8 @@
       },
       "kind": "StorageV2",
       "properties": {
-        "accessTier": "Hot",
-        "allowSharedKeyAccess": false
+        "accessTier": "Hot"
       }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices",
-      "apiVersion": "2023-01-01",
-      "name": "[format('{0}/{1}', parameters('storageAccountName'), 'default')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-      "apiVersion": "2023-01-01",
-      "name": "[format('{0}/{1}/{2}', parameters('storageAccountName'), 'default', variables('deploymentStorageContainerName'))]",
-      "properties": {
-        "publicAccess": "None"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]"
-      ]
     },
     {
       "type": "Microsoft.Web/serverfarms",
@@ -218,10 +198,6 @@
           "linuxFxVersion": "[concat(parameters('functionAppRuntime'),'|', parameters('functionAppRuntimeVersion'))]",
           "appSettings": [
             {
-              "name": "AzureWebJobsStorage__accountName",
-              "value": "[parameters('storageAccountName')]"
-            },
-            {
               "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
               "value": "[reference(resourceId('Microsoft.Insights/components', parameters('applicationInsightsName')), '2020-02-02').ConnectionString]"
             },
@@ -263,31 +239,6 @@
         "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
         "[resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName'))]"
       ]
-    },
-    { //Gives the function app access to the storage account using system assigned managed identity
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2020-04-01-preview",
-      "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), variables('storageRoleDefinitionId'))]",
-      "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageRoleDefinitionId'))]",
-        "principalId": "[reference(resourceId('Microsoft.Web/sites', parameters('functionAppName')), '2023-12-01', 'Full').identity.principalId]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-        "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Web/sites/slots/extensions",
-      "apiVersion": "2021-03-01",
-      "name": "[format('{0}/{1}/ZipDeploy', parameters('functionAppName'), 'DeploymentSlot1')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites/slots', parameters('functionAppName'), 'DeploymentSlot1')]"
-      ],
-      "properties": {
-        "packageUri": "[parameters('applicationZipUrl')]"
-      }
     },
     {
       "type": "Microsoft.CognitiveServices/accounts",
