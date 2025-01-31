@@ -111,13 +111,11 @@
       "location": "[resourceGroup().location]",
       "kind": "functionapp",
       "sku": {
-        "name": "Y1",
-        "tier": "Dynamic",
-        "size": "Y1",
-        "family": "Y"
+        "tier": "FlexConsumption",
+        "name": "FC1"
       },
       "properties": {
-        "computeMode": "Dynamic"
+        "reserved": true
       }
     },
     {
@@ -159,10 +157,6 @@
             {
               "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
               "value": "[reference(resourceId('Microsoft.Insights/components', parameters('applicationInsightsName')), '2020-02-02').ConnectionString]"
-            },
-            {
-              "name": "WEBSITE_RUN_FROM_PACKAGE",
-              "value": "[parameters('applicationZipUrl')]"
             }
           ]
         }
@@ -184,6 +178,18 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+        "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('functionAppName'), '/onedeploy')]",
+      "type": "Microsoft.Web/sites/extensions",
+      "apiVersion": "2022-09-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "packageUri": "[parameters('applicationZipUrl')]"
+      },
+      "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
       ]
     }

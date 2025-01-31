@@ -9,6 +9,8 @@
         "location": {
           "allowedValues": [
             "eastus",
+            "eastus2",
+            "canadaeast",
             "westus2",
             "centralus",
             "westeurope",
