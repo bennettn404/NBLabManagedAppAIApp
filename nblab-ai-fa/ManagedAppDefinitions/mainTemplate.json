@@ -179,7 +179,7 @@
             },
             {
               "name": "VISION_KEY",
-              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').keys[0].value]"
+              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').key1]"
             }
           ]
         }
@@ -227,7 +227,7 @@
             },
             {
               "name": "VISION_KEY",
-              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').keys[0].value]"
+              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').key1]"
             }
           ]
         }
