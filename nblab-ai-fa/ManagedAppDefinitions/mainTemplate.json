@@ -15,6 +15,10 @@
       "type": "string",
       "defaultValue": "[concat('nblab-fa-', uniqueString(resourceGroup().id, deployment().name))]"
     },
+    "aiServicesName": {
+      "type": "string",
+      "defaultValue": "[concat('nblab-aicv-', uniqueString(resourceGroup().id, deployment().name))]"
+    },
     "functionAppRuntime": {
       "type": "string",
       "defaultValue": "dotnet-isolated"
@@ -168,6 +172,14 @@
             {
               "name": "FUNCTIONS_WORKER_RUNTIME",
               "value": "dotnet-isolated"
+            },
+            {
+              "name": "VISION_ENDPOINT",
+              "value": "[concat('https://', parameters('aiServicesName'), '.cognitiveservices.azure.com/')]"
+            },
+            {
+              "name": "VISION_KEY",
+              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').keys[0].value]"
             }
           ]
         }
@@ -175,7 +187,8 @@
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-        "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]"
+        "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName'))]"
       ]
     },
     {
@@ -207,6 +220,14 @@
             {
               "name": "FUNCTIONS_WORKER_RUNTIME",
               "value": "dotnet-isolated"
+            },
+            {
+              "name": "VISION_ENDPOINT",
+              "value": "[concat('https://', parameters('aiServicesName'), '.cognitiveservices.azure.com/')]"
+            },
+            {
+              "name": "VISION_KEY",
+              "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName')), '2023-05-01').keys[0].value]"
             }
           ]
         }
@@ -215,7 +236,8 @@
         "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]",
-        "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('aiServicesName'))]"
       ]
     },
     { //Gives the function app access to the storage account using system assigned managed identity
@@ -241,6 +263,23 @@
       ],
       "properties": {
         "packageUri": "[parameters('applicationZipUrl')]"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('aiServicesName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "kind": "ComputerVision",
+      "sku": {
+        "name": "S1"
+      },
+      "properties": {
+        "publicNetworkAccess": "All",
+        "disableLocalAuth": true
       }
     }
   ]
