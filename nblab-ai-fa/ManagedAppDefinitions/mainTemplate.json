@@ -147,6 +147,7 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
         "siteConfig": {
+          "linuxFxVersion": "[concat(parameters('functionAppRuntime'),'|', parameters('functionAppRuntimeVersion'))]",
           "appSettings": [
             {
               "name": "AzureWebJobsStorage__accountName",
@@ -162,7 +163,11 @@
             },
             {
               "name": "WEBSITE_RUN_FROM_PACKAGE",
-              "value": "1"
+              "value": "[parameters('applicationZipUrl')]"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet-isolated"
             }
           ]
         }
@@ -185,6 +190,7 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionPlanName'))]",
         "siteConfig": {
+          "linuxFxVersion": "[concat(parameters('functionAppRuntime'),'|', parameters('functionAppRuntimeVersion'))]",
           "appSettings": [
             {
               "name": "AzureWebJobsStorage__accountName",
@@ -199,8 +205,8 @@
               "value": "~4"
             },
             {
-              "name": "WEBSITE_RUN_FROM_PACKAGE",
-              "value": "[parameters('applicationZipUrl')]"
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet-isolated"
             }
           ]
         }
