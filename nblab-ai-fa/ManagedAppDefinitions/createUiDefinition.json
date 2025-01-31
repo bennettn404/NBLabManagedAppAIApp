@@ -3,28 +3,6 @@
   "handler": "Microsoft.Azure.CreateUIDef",
   "version": "0.1.2-preview",
   "parameters": {
-    "config": {
-      "isWizard": true,
-      "basics": {
-        "location": {
-          "allowedValues": [
-            "eastus",
-            "eastus2",
-            "canadaeast",
-            "westus2",
-            "centralus",
-            "westeurope",
-            "northeurope",
-            "uksouth",
-            "francecentral",
-            "japaneast",
-            "southeastasia",
-            "australiaeast"
-          ],
-          "visible": true
-        }
-      }
-    },
     "basics": [],
     "steps": [
       {
@@ -146,6 +124,7 @@
       }
     ],
     "outputs": {
+      "location": "[location()]",
       "functionAppRuntime": "[steps('functionAppConfig').functionAppConfigSection1.runtime]",
       "functionAppRuntimeVersion": "[coalesce(steps('functionAppConfig').functionAppConfigSection1.runtimeJava,coalesce(steps('functionAppConfig').functionAppConfigSection1.runtimeNET)]",
       "applicationZipUrl": "[steps('functionAppConfig').functionAppConfigSection1.zipDeployUrl]"
