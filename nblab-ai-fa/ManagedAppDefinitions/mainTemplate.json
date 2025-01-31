@@ -4,7 +4,7 @@
   "parameters": {
     "functionPlanName": {
       "type": "string",
-      "defaultValue": "[concat('nblab-asp', uniqueString(resourceGroup().id))]"
+      "defaultValue": "[concat('nblab-asp-', uniqueString(resourceGroup().id))]"
     },
     "functionAppName": {
       "type": "string",
@@ -23,15 +23,15 @@
     },
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "[concat('nblab-sa', uniqueString(resourceGroup().id))]"
+      "defaultValue": "[concat('nblabsa', uniqueString(resourceGroup().id))]"
     },
     "logAnalyticsName": {
       "type": "string",
-      "defaultValue": "[concat('nblab-la', uniqueString(resourceGroup().id))]"
+      "defaultValue": "[concat('nblab-la-', uniqueString(resourceGroup().id))]"
     },
     "applicationInsightsName": {
       "type": "string",
-      "defaultValue": "[concat('nblab-appi', uniqueString(resourceGroup().id))]"
+      "defaultValue": "[concat('nblab-appi-', uniqueString(resourceGroup().id))]"
     }
   },
   "variables": {
