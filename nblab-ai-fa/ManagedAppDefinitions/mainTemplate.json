@@ -111,11 +111,13 @@
       "location": "[resourceGroup().location]",
       "kind": "functionapp",
       "sku": {
-        "tier": "FlexConsumption",
-        "name": "FC1"
+        "name": "Y1",
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y"
       },
       "properties": {
-        "reserved": true
+        "computeMode": "Dynamic"
       }
     },
     {
@@ -159,7 +161,7 @@
               "value": "[reference(resourceId('Microsoft.Insights/components', parameters('applicationInsightsName')), '2020-02-02').ConnectionString]"
             },
             {
-              "name": "WEBSITE_RUN_FROM_ZIP",
+              "name": "WEBSITE_RUN_FROM_PACKAGE",
               "value": "[parameters('applicationZipUrl')]"
             }
           ]
