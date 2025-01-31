@@ -16,13 +16,10 @@ A Service Catalog Managed Application Definition is comprised of two parts, the 
 - The createUiDefinition.json describes the deployment process a user will see when deploying the Managed App from the Service Catalog. This is made up of various parameter inputs to the mainTemplate.json
 
 For example the mainTemplate to be used in this lab:
-<details>
- 
-</details>
+[mainTemplate](https://github.com/bennettn404/NBLabManagedAppAIApp/blob/812ef17520b46e83543e59b9f9ec62985513f5eb/nblab-ai-fa/ManagedAppDefinitions/mainTemplate.json)
 and  createUiDefinition.json
-<details>
+[createUiDefinition](https://pages.github.com/](https://github.com/bennettn404/NBLabManagedAppAIApp/blob/812ef17520b46e83543e59b9f9ec62985513f5eb/nblab-ai-fa/ManagedAppDefinitions/createUiDefinition.json))
 
-</details>
 Put these in a zip archive, taking care the file names are case-sensitive, and provide a url to this zip archive (possibly using Azure storage). This has been provided in this repo.
 
 Then deploy the definition via the Service Catalog Managed Application Definition portal, specifying which permissions the user creating the Managed App will have to the underlying resources, and the option to specify an identity with access to all created Managed Apps from that definition.
