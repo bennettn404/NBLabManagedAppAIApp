@@ -155,7 +155,7 @@
             },
             {
               "name": "VISION_ENDPOINT",
-              "value": "[concat('https://', parameters('aiServicesName'), '.cognitiveservices.azure.com/')]"
+              "value": "[concat('https://', parameters('location'), '.api.cognitive.microsoft.com/')]"
             },
             {
               "name": "VISION_KEY",
@@ -211,7 +211,7 @@
             },
             {
               "name": "VISION_ENDPOINT",
-              "value": "[concat('https://', parameters('aiServicesName'), '.cognitiveservices.azure.com/')]"
+              "value": "[concat('https://', parameters('location'), '.api.cognitive.microsoft.com/')]"
             },
             {
               "name": "VISION_KEY",
